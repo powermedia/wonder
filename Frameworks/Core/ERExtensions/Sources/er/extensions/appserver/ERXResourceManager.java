@@ -171,7 +171,7 @@ public class ERXResourceManager extends WOResourceManager {
 			}
 			String encoded = WOURLEncoder.encode(fileURL);
 			String key = WOApplication.application().resourceRequestHandlerKey();
-			if (WOApplication.application()._rapidTurnaroundActiveForAnyProject() && WOApplication.application().isDirectConnectEnabled() && ERXApplication.isWO54()) {
+			if (!fileURL.startsWith("jar:file://") && WOApplication.application()._rapidTurnaroundActiveForAnyProject() && WOApplication.application().isDirectConnectEnabled() && ERXApplication.isWO54()) {
 				// AK: 5.4
 				key = "_wr_";
 			}
