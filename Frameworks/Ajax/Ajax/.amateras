@@ -1,0 +1,11 @@
+#EclipseHTMLEditor configuration file
+#Tue Oct 16 09:45:43 CEST 2012
+validateDTD=true
+useDTD=true
+validateJSP=true
+validateXML=true
+validateJS=true
+removeMarkers=false
+root=/
+validateHTML=true
+javaScripts=
