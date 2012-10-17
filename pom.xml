@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>wonder</groupId>
 	<artifactId>wonder</artifactId>
-	<version>5.7-SNAPSHOT-PM-1</version>
+	<version>5.7.pm.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Project Wonder</name>
 	<url>http://wiki.objectstyle.org/confluence/display/WONDER/Home</url>
@@ -761,12 +761,12 @@
 
 	<distributionManagement>
     <repository>
-      <id>power.deploy</id>
+      <id>power-releases.deploy</id>
       <name>Power</name>
       <url>http://testpowolny1:8080/nexus/content/repositories/pm-releases/</url>
     </repository>
     <snapshotRepository>
-      <id>power.deploy</id>
+      <id>power-snapshots.deploy</id>
       <name>Power</name>
       <uniqueVersion>false</uniqueVersion>
       <url>http://testpowolny1:8080/nexus/content/repositories/pm-snapshots/</url>
