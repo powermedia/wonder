@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>wonder</groupId>
 	<artifactId>wonder</artifactId>
-	<version>5.7-PM-SNAPSHOT</version>
+	<version>5.7-SNAPSHOT-PM-1</version>
 	<packaging>pom</packaging>
 	<name>Project Wonder</name>
 	<url>http://wiki.objectstyle.org/confluence/display/WONDER/Home</url>
@@ -16,7 +15,7 @@
 		<!-- Tests module configuration not finished yet -->
 		<!-- <module>Tests</module> -->
 		<module>Utilities</module>
-	</modules>
+  </modules>
 
 	<properties>
 		<!-- VERY BAD PRACTICE: But there are broken tests -->
@@ -58,7 +57,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore/>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
@@ -710,6 +709,7 @@
 		</dependencies>
 	</dependencyManagement>
 
+<!--
 	<repositories>
 		<repository>
 			<id>wocommunity</id>
@@ -757,4 +757,20 @@
 		<url>scm:git:git@github.com:projectwonder/wonder.git</url>
 		<developerConnection>scm:git:git@github.com:projectwonder/wonder.git</developerConnection>
 	</scm>
+-->	
+
+	<distributionManagement>
+    <repository>
+      <id>power.deploy</id>
+      <name>Power</name>
+      <url>http://testpowolny1:8080/nexus/content/repositories/pm-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>power.deploy</id>
+      <name>Power</name>
+      <uniqueVersion>false</uniqueVersion>
+      <url>http://testpowolny1:8080/nexus/content/repositories/pm-snapshots/</url>
+    </snapshotRepository>        
+  </distributionManagement>
+
 </project>
