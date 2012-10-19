@@ -37,7 +37,7 @@
 		</dependency>
 		<dependency>
 			<groupId>wonder.businesslogic</groupId>
-			<artifactId>ERAttachment</artifactId>
+		<artifactId>ERAttachment</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>wonder.misc</groupId>
@@ -64,8 +64,12 @@
 			<artifactId>JavaXML</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-library</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<artifactId>junit-dep</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
