@@ -156,3 +156,7 @@ JSONExample : WOHyperlink {
 ComponentReveal : WOHyperlink {
 	pageName = "ComponentRevealExample";
 }
+
+ComponentName : WOString {
+	value = context.page.name;
+}
