@@ -571,4 +571,13 @@ public class AjaxUtils {
 		response.appendContentString("Element.update('" + id + "'," + AjaxValue.javaScriptEscaped(value) + ");");
 	}
 
+	public static void addJQueryScriptInHead(WOContext context, WOResponse response) {
+		AjaxUtils.addScriptResourceInHead(context, response, "Ajax", "jquery/jquery.js");
+		AjaxUtils.addScriptResourceInHead(context, response, "Ajax", "jquery/coreUtils.js");
+	}
+
+	public static void addWonderJQueryScriptInHead(WOContext context, WOResponse response) {
+		addJQueryScriptInHead(context, response);
+		AjaxUtils.addScriptResourceInHead(context, response, "Ajax", "jquery/wonder-jquery.js");
+	}
 }

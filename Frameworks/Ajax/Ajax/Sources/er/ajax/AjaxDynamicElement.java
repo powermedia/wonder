@@ -152,4 +152,12 @@ public abstract class AjaxDynamicElement extends ERXDynamicElement implements IA
 	protected void addStylesheetResourceInHead(WOContext context, WOResponse response, String fileName) {
 		AjaxUtils.addStylesheetResourceInHead(context, response, fileName);
 	}
+
+	protected void addJQueryScriptInHead(WOContext context, WOResponse response) {
+		AjaxUtils.addJQueryScriptInHead(context, response);
+	}
+
+	protected void addWonderJQueryScriptInHead(WOContext context, WOResponse response) {
+		AjaxUtils.addWonderJQueryScriptInHead(context, response);
+	}
 }

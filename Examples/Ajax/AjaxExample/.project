@@ -3,6 +3,9 @@
 	<name>AjaxExample</name>
 	<comment></comment>
 	<projects>
+		<project>Ajax</project>
+		<project>ERExtensions</project>
+		<project>JavaWOExtensions</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

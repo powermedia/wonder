@@ -22,5 +22,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/Ajax"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ERExtensions"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JavaWOExtensions"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
