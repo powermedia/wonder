@@ -15,3 +15,6 @@ er.extensions.Ajax.hasLocalization=false
 #er.extensions.ERXResponseRewriter.resource.Ajax.wonder.js=Ajax.wondaculous-min.js
 #er.extensions.ERXResponseRewriter.resource.Ajax.wonder_inplace.js=Ajax.wondaculous-min.js
 #er.extensions.ERXResponseRewriter.resource.Ajax.switchtabs.js=Ajax.wondaculous-min.js
+
+
+er.extensions.ERXResponseRewriter.resource.Ajax.jquery/jquery.js=Ajax.jquery/jquery-1.8.2.js

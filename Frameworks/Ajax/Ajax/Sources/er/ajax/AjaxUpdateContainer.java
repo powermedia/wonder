@@ -45,9 +45,10 @@ public class AjaxUpdateContainer extends AjaxDynamicElement {
 	 * Adds all required resources.
 	 */
 	protected void addRequiredWebResources(WOResponse response, WOContext context) {
-		addScriptResourceInHead(context, response, "prototype.js");
-		addScriptResourceInHead(context, response, "effects.js");
-		addScriptResourceInHead(context, response, "wonder.js");
+		addWonderJQueryScriptInHead(context, response);
+//		addScriptResourceInHead(context, response, "prototype.js");
+//		addScriptResourceInHead(context, response, "effects.js");
+//		addScriptResourceInHead(context, response, "wonder.js");
 	}
 
 	protected boolean shouldRenderContainer(WOComponent component) {
