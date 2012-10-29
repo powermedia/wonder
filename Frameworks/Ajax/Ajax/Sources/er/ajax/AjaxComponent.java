@@ -74,7 +74,11 @@ public abstract class AjaxComponent extends WOComponent implements IAjaxElement 
     }
 
     protected void addScriptResourceInHead(WOResponse _response, String _framework, String _fileName) {
-	AjaxUtils.addScriptResourceInHead(context(), _response, _framework, _fileName);
+    	AjaxUtils.addScriptResourceInHead(context(), _response, _framework, _fileName);
+    }
+
+    protected void addWonderJQueryScriptInHead(WOResponse _response) {
+    	AjaxUtils.addWonderJQueryScriptInHead(context(), _response);
     }
     
     protected void addStylesheetResourceInHead(WOResponse _response, String _fileName) {

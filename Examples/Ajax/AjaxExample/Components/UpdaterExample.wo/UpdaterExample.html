@@ -32,7 +32,7 @@
         	the container using an AjaxUpdateLink, set evalScripts = true on the update link.  This update container updates the 
         	status message above every time it is reloaded.
 					<script>
-					Element.update('statusMessage', 'Javascript update from container <span id="UpdateTimeBottomString"><webobject name="String1"></webobject></span>');
+						jQueryId('statusMessage').html('Javascript update from container <span id="UpdateTimeBottomString"><webobject name="String1"></webobject></span>');
 					</script>
         	<hr/>
 					<p/>
