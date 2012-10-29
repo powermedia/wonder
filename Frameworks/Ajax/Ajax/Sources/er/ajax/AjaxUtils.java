@@ -576,7 +576,9 @@ public class AjaxUtils {
 
 	public static void addJQueryScriptInHead(WOContext context, WOResponse response) {
 		AjaxUtils.addScriptResourceInHead(context, response, "Ajax", "jquery/jquery.js");
+		AjaxUtils.addScriptResourceInHead(context, response, "Ajax", "jquery/jquery-ui.js");
 		AjaxUtils.addScriptResourceInHead(context, response, "Ajax", "jquery/coreUtils.js");
+		AjaxUtils.addStylesheetResourceInHead(context, response, "Ajax", "jquery/jquery-ui.css");
 	}
 
 	public static void addWonderJQueryScriptInHead(WOContext context, WOResponse response) {
