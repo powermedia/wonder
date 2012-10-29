@@ -2,6 +2,18 @@ jQueryId = function(id) {
     return jQuery("#" + id);
 }
 
+var AjaxOptions = {
+    defaultOptions : function(additionalOptions) {
+        var options = {
+            method : 'GET',
+            asynchronous : true,
+            evalScripts : true
+        };
+        jQuery.extend(options, additionalOptions || {});
+        return options;
+    }
+}
+
 var AjaxUpdateContainer = {
     // registerPeriodic: function(id, canStop, stopped, options) {
     // var url = $(id).getAttribute('updateUrl');
@@ -17,20 +29,20 @@ var AjaxUpdateContainer = {
     // else {
     // updater = new Ajax.ActivePeriodicalUpdater(id, url, options);
     // }
-    //		
+    //    
     // eval(id + "PeriodicalUpdater = updater;");
     // eval(id + "Stop = function() { " + id + "PeriodicalUpdater.stop() };");
     // },
-    //	
+    //  
     // insertionFunc: function(effectPairName, beforeDuration, afterDuration) {
     // var insertionFunction;
-    //		
+    //    
     // var showEffect = 0;
     // var hideEffect = 1;
-    //		
+    //    
     // for (var existingPairName in Effect.PAIRS) {
     // var pairs = Effect.PAIRS[existingPairName];
-    //	
+    //  
     // if (effectPairName == existingPairName) {
     // insertionFunction = function(receiver, response) {
     // Effect[Effect.PAIRS[effectPairName][hideEffect]](receiver, {
@@ -65,10 +77,10 @@ var AjaxUpdateContainer = {
     // };
     // }
     // }
-    //		
+    //    
     // return insertionFunction;
     // },
-    //	
+    //  
 
     register : function(id, options) {
         if (!options) {
@@ -77,7 +89,7 @@ var AjaxUpdateContainer = {
         eval(id + "Update = function() {AjaxUpdateContainer.update(id, options) }");
     },
 
-//	
+//  
 // update: function(id, options) {
 // var updateElement = $(id);
 // if (updateElement == null) {
@@ -124,9 +136,7 @@ var AjaxUpdateLink = {
         }
         actionUrl = actionUrl.addQueryParameters(new Date().getTime());
         
-       jQueryId(id).load(actionUrl);
-        
-//        new Ajax.Updater(id, actionUrl, AjaxOptions.defaultOptions(options));
+        Ajax.updater(id, actionUrl, AjaxOptions.defaultOptions(options));
     },
 
 // request : function(actionUrl, options, elementID, queryParams) {
