@@ -2,18 +2,6 @@ jQueryId = function(id) {
     return jQuery("#" + id);
 }
 
-var AjaxOptions = {
-    defaultOptions : function(additionalOptions) {
-        var options = {
-            method : 'GET',
-            asynchronous : true,
-            evalScripts : true
-        };
-        jQuery.extend(options, additionalOptions || {});
-        return options;
-    }
-}
-
 var AjaxUpdateContainer = {
     // registerPeriodic: function(id, canStop, stopped, options) {
     // var url = $(id).getAttribute('updateUrl');
@@ -135,8 +123,10 @@ var AjaxUpdateLink = {
             actionUrl = actionUrl.addQueryParameters('_u=' + id);
         }
         actionUrl = actionUrl.addQueryParameters(new Date().getTime());
-
-        Ajax.updater(id, actionUrl, AjaxOptions.defaultOptions(options));
+        
+       jQueryId(id).load(actionUrl);
+        
+//        new Ajax.Updater(id, actionUrl, AjaxOptions.defaultOptions(options));
     },
 
 // request : function(actionUrl, options, elementID, queryParams) {
