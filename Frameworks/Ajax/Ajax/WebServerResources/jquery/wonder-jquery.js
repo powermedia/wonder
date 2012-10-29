@@ -128,15 +128,15 @@ var AjaxUpdateLink = {
         if (elementID) {
             actionUrl = actionUrl.replace(/[^\/]+$/g, elementID);
         }
-        actionUrl = actionUrl.addQueryParameters(queryParams);
+        actionUrl = StringUtils.addQueryParameters(actionUrl, queryParams);
         if (options && options['_r']) {
-            actionUrl = actionUrl.addQueryParameters('_r=' + id);
+            actionUrl = StringUtils.addQueryParameters(actionUrl, '_r=' + id);
         } else {
-            actionUrl = actionUrl.addQueryParameters('_u=' + id);
+            actionUrl = StringUtils.addQueryParameters(actionUrl, '_u=' + id);
         }
-        actionUrl = actionUrl.addQueryParameters(new Date().getTime());
+        actionUrl = StringUtils.addQueryParameters(actionUrl, new Date().getTime());
         
-        Ajax.updater(id, actionUrl, AjaxOptions.defaultOptions(options));
+        Ajax.Updater(id, actionUrl, AjaxOptions.defaultOptions(options));
     },
 
 // request : function(actionUrl, options, elementID, queryParams) {

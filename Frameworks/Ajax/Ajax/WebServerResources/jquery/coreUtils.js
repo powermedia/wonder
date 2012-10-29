@@ -7,7 +7,7 @@ var ScriptFragment = '<script[^>]*>([\\S\\s]*?)<\/script>';
     var STRING_CLASS = '[object String]';
     var DATE_CLASS = '[object Date]';
 
-    jQuery.extend(Object.prototype, {
+    window.ObjectUtils = {
         isFunction : function(object) {
             return _toString.call(object) === FUNCTION_CLASS;
         },
@@ -27,24 +27,24 @@ var ScriptFragment = '<script[^>]*>([\\S\\s]*?)<\/script>';
         isUndefined : function(object) {
             return typeof object === "undefined";
         }
-    });
+    };
+
+    window.StringUtils = {
+        addQueryParameters : function(str, params) {
+            if (params) {
+                return str + (str.match(/\?/) ? '&' : '?') + params;
+            } else {
+                return str;
+            }
+        },
+
+        stripScripts : function(str) {
+            return str.replace(new RegExp(ScriptFragment, 'img'), '');
+        }
+    }
 })();
 
-jQuery.extend(String.prototype, {
-    addQueryParameters : function(additionalParameters) {
-        if (additionalParameters) {
-            return this + (this.match(/\?/) ? '&' : '?') + additionalParameters;
-        } else {
-            return this;
-        }
-    },
-
-    stripScripts : function() {
-        return this.replace(new RegExp(ScriptFragment, 'img'), '');
-    }
-});
-
-var Ajax = function() {}
+var Ajax = {}
 
 Ajax.prepareJQueryOption = function(prototypeOptions) {
     var opts = jQuery.extend({}, prototypeOptions || {});
@@ -55,18 +55,20 @@ Ajax.prepareJQueryOption = function(prototypeOptions) {
     return opts;
 }
 
-var Element = function() {}
+var Element = function() {
+}
 
-Ajax.updater = function(container, url, options) {
+Ajax.Updater = function(container, url, options) {
     if (options.insertion) {
         throw "Not implemented: insertion";
     }
-    
+
     var _container = {
         success : (container.success || container),
         failure : (container.failure || (container.success ? null : container))
     };
-    var onComplete = options.onComplete || function() {};
+    var onComplete = options.onComplete || function() {
+    };
     var evalScripts = options.evalScripts;
 
     var opts = jQuery.extend(Ajax.prepareJQueryOption(options), {

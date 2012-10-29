@@ -114,6 +114,9 @@ public class AjaxUtils {
 	 * @param fileName
 	 */
 	public static void addScriptResourceInHead(WOContext context, WOResponse response, String framework, String fileName) {
+		if (fileName.equals("prototype.js") || fileName.equals("wonder.js") || fileName.equals("effects.js")) {
+			throw new IllegalArgumentException("Prototype JavaScript library is deprecated");
+		}
 		String processedFileName = fileName;
 		// PROTOTYPE MISC
 		if (ERXProperties.booleanForKey("er.ajax.compressed") && ("prototype.js".equals(fileName) || "scriptaculous.js".equals(fileName))) {
