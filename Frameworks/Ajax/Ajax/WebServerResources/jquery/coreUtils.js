@@ -75,6 +75,35 @@ withId = function(id) {
     return document.getElementById(id);
 }
 
+defer = function(func) {
+    return window.setTimeout(func, 0.01);
+}
+
+jQuery.fn.cumulativeZINdex = function() {
+    var $this = $(this);
+    
+    zIndex = $this.zIndex();
+
+    $this.parents().each(function() {
+        zIndex = zIndex + $this.zIndex();
+    });
+    
+    return zIndex;
+}
+
+jQuery.fn.zIndex = function() {
+    try {
+        var res = Number(this.css("zIndex"));
+        if (isNaN(res)) {
+            return 0;
+        } else {
+            return res;
+        }
+    } catch (e) {
+        return 0;
+    }
+}
+
 var ScriptFragment = '<script[^>]*>([\\S\\s]*?)<\/script>';
 
 (function() {
