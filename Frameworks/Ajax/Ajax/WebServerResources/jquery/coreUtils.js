@@ -82,16 +82,16 @@ defer = function(func) {
 jQuery.fn.cumulativeZINdex = function() {
     var $this = $(this);
     
-    zIndex = $this.zIndex();
+    zIndex = $this.elemZIndex();
 
     $this.parents().each(function() {
-        zIndex = zIndex + $this.zIndex();
+        zIndex = zIndex + $this.elemZIndex();
     });
     
     return zIndex;
 }
 
-jQuery.fn.zIndex = function() {
+jQuery.fn.elemZIndex = function() {
     try {
         var res = Number(this.css("zIndex"));
         if (isNaN(res)) {
@@ -102,6 +102,10 @@ jQuery.fn.zIndex = function() {
     } catch (e) {
         return 0;
     }
+}
+
+jQuery.fn.isInDOM = function() {
+    return this.closest('html').length > 0;
 }
 
 var ScriptFragment = '<script[^>]*>([\\S\\s]*?)<\/script>';
