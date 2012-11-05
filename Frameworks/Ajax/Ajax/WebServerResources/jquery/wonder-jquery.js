@@ -248,49 +248,56 @@ var AjaxSubmitButton = {
      */
 
     observeField : function(updateContainerID, formFieldID, observeFieldFrequency, partial, observeDelay, options) {
-        var submitFunction;
-        if (partial) {
-            // We need to cheat and make the WOForm that contains the form
-            // action appear to have been
-            // submitted. So we grab the action url, pull off the element ID
-            // from its action URL
-            // and pass that in as FORCE_FORM_SUBMITTED_KEY, which is processed
-            // by ERXWOForm just like
-            // senderID is on the real WOForm. Unfortunately we can't hook into
-            // the real WOForm to do
-            // this :(
-            submitFunction = function(element, value) {
-                if (!options.onBeforeSubmit || options.onBeforeSubmit(formFieldID)) {
-                    ASB.partial(updateContainerID, formFieldID, options);
+        var $formField = jQueryId(formFieldID);
+        if ($formField.length > 0 && ($formField.is("input") || $formField.is("select") || $formField.is("textarea"))) {
+            var submitFunction;
+            if (partial) {
+                // We need to cheat and make the WOForm that contains the
+                // form
+                // action appear to have been
+                // submitted. So we grab the action url, pull off the
+                // element ID
+                // from its action URL
+                // and pass that in as FORCE_FORM_SUBMITTED_KEY, which is
+                // processed
+                // by ERXWOForm just like
+                // senderID is on the real WOForm. Unfortunately we can't
+                // hook into
+                // the real WOForm to do
+                // this :(
+                submitFunction = function(element, value) {
+                    if (!options.onBeforeSubmit || options.onBeforeSubmit(formFieldID)) {
+                        ASB.partial(updateContainerID, formFieldID, options);
+                    }
                 }
-            }
-        } else if (updateContainerID != null) {
-            submitFunction = function(element, value) {
-                if (!options.onBeforeSubmit || options.onBeforeSubmit(formFieldID)) {
-                    ASB.update(updateContainerID, withId(formFieldID).form, null, options);
+            } else if (updateContainerID != null) {
+                submitFunction = function(element, value) {
+                    if (!options.onBeforeSubmit || options.onBeforeSubmit(formFieldID)) {
+                        ASB.update(updateContainerID, withId(formFieldID).form, null, options);
+                    }
                 }
-            }
-        } else {
-            submitFunction = function(element, value) {
-                if (!options.onBeforeSubmit || options.onBeforeSubmit(formFieldID)) {
-                    ASB.request(withId(formFieldID).form, null, options);
-                }
-            }
-        }
-
-        if (observeDelay) {
-            var delayer = new AjaxObserveDelayer(observeDelay, submitFunction);
-            submitFunction = delayer.valueChanged.bind(delayer);
-        }
-
-        if (observeFieldFrequency == null) {
-            if (withId(formFieldID).type.toLowerCase() == 'radio') {
-                new Form.Element.RadioButtonObserver(withId(formFieldID), submitFunction);
             } else {
-                new Form.Element.EventObserver(withId(formFieldID), submitFunction);
+                submitFunction = function(element, value) {
+                    if (!options.onBeforeSubmit || options.onBeforeSubmit(formFieldID)) {
+                        ASB.request(withId(formFieldID).form, null, options);
+                    }
+                }
             }
-        } else {
-            new Form.Element.Observer(withId(formFieldID), observeFieldFrequency, submitFunction);
+
+            if (observeDelay) {
+                var delayer = new AjaxObserveDelayer(observeDelay, submitFunction);
+                submitFunction = delayer.valueChanged.bind(delayer);
+            }
+
+            if (observeFieldFrequency == null) {
+                if (withId(formFieldID).type.toLowerCase() == 'radio') {
+                    new Form.Element.RadioButtonObserver(withId(formFieldID), submitFunction);
+                } else {
+                    new Form.Element.EventObserver(withId(formFieldID), submitFunction);
+                }
+            } else {
+                new Form.Element.Observer(withId(formFieldID), observeFieldFrequency, submitFunction);
+            }
         }
     }
 };
