@@ -81,13 +81,13 @@ defer = function(func) {
 
 jQuery.fn.cumulativeZINdex = function() {
     var $this = $(this);
-    
+
     zIndex = $this.elemZIndex();
 
     $this.parents().each(function() {
         zIndex = zIndex + $this.elemZIndex();
     });
-    
+
     return zIndex;
 }
 
@@ -299,44 +299,43 @@ var Ajax = {
     }
 }
 
-Ajax.Updater = function(container, url, options) {
-    this.container = {
-        success : (container.success || container),
-        failure : (container.failure || (container.success ? null : container))
-    };
-    var onComplete = options.onComplete || function() {
-    };
+Ajax.Updater = Class.extend({
+    init : function(container, url, options) {
+        this.container = {
+            success : (container.success || container),
+            failure : (container.failure || (container.success ? null : container))
+        };
 
-    var evalScripts = options.evalScripts;
+        var onComplete = options.onComplete || function() {
+        };
 
-    var opts = jQuery.extend(Ajax.prepareJQueryOption(options), {
-        url : url,
-        dataType : "html",
-        container : this.container
-    });
+        this.options = jQuery.extend(Ajax.prepareJQueryOption(options), {
+            url : url,
+            dataType : "html",
+            container : this.container
+        });
 
-    var updater = this;
+        jQuery.ajax(this.options).done(jQuery.proxy(this.updateContent, this), onComplete);
+    },
 
-    jQuery.ajax(opts).done(function(responseText, statusText, jqXHR) {
-
-        var receiver = updater.container[jqXHR.success ? 'success' : 'failure'];
+    updateContent : function(responseText, statusText, jqXHR) {
+        var receiver = this.container[jqXHR.success ? 'success' : 'failure'];
 
         if (receiver && jQueryId(receiver).length > 0) {
 
-            if (!evalScripts) {
+            if (!this.options.evalScripts) {
                 responseText = responseText.stripScripts();
             }
 
-            if (opts.insertion) {
-                opts.insertion(jQueryId(receiver), responseText);
+            if (this.options.insertion) {
+                this.options.insertion(jQueryId(receiver), responseText);
             } else {
                 jQueryId(receiver).html(responseText);
             }
-
         }
-    }, onComplete);
+    }
 
-};
+});
 
 // Observers
 Abstract.EventObserver = Class.extend({
