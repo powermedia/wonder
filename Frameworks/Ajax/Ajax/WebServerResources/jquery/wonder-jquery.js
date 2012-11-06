@@ -289,15 +289,17 @@ var AjaxSubmitButton = {
                 submitFunction = delayer.valueChanged.bind(delayer);
             }
 
-            if (observeFieldFrequency == null) {
-                if (withId(formFieldID).type.toLowerCase() == 'radio') {
-                    new Form.Element.RadioButtonObserver(withId(formFieldID), submitFunction);
+            defer(function() {
+                if (observeFieldFrequency == null) {
+                    if (withId(formFieldID).type.toLowerCase() == 'radio') {
+                        new Form.Element.RadioButtonObserver(withId(formFieldID), submitFunction);
+                    } else {
+                        new Form.Element.EventObserver(withId(formFieldID), submitFunction);
+                    }
                 } else {
-                    new Form.Element.EventObserver(withId(formFieldID), submitFunction);
+                    new Form.Element.Observer(withId(formFieldID), observeFieldFrequency, submitFunction);
                 }
-            } else {
-                new Form.Element.Observer(withId(formFieldID), observeFieldFrequency, submitFunction);
-            }
+            });
         }
     }
 };

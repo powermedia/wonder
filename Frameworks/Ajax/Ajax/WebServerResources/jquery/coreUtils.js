@@ -366,18 +366,13 @@ Abstract.EventObserver = Class.extend({
 
     registerCallback : function(element) {
         if (element.type) {
-            var _this = this;
             switch (element.type.toLowerCase()) {
                 case 'checkbox':
                 case 'radio':
-                    this.jqElement.click(function() {
-                        _this.onElementEvent();
-                    });
+                    this.jqElement.click(jQuery.proxy(this.onElementEvent, this));
                     break;
                 default:
-                    this.jqElement.change(function() {
-                        _this.onElementEvent();
-                    });
+                    this.jqElement.change(jQuery.proxy(this.onElementEvent, this));
                     break;
             }
         }
