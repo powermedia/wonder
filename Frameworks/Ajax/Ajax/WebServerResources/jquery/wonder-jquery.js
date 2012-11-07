@@ -64,7 +64,7 @@ var AjaxUpdateContainer = {
                             jQuery(receiver).html(response);
                             jQuery(receiver).show({
                                 effect : effect,
-                                duration : (afterDuration || 0.5) * 1000,
+                                duration : (afterDuration || 0.5) * 1000
                             });
                         }
                     });
@@ -88,7 +88,7 @@ var AjaxUpdateContainer = {
                     jQuery(receiver).html(response);
                     jQuery(receiver).show({
                         effect : effect,
-                        duration : (afterDuration || 0.5) * 1000,
+                        duration : (afterDuration || 0.5) * 1000
                     });
                 };
             }
@@ -139,7 +139,7 @@ var AjaxUpdateLink = {
         actionUrl = StringUtils.addQueryParameters(actionUrl, '__updateTime=' + new Date().getTime());
 
         new Ajax.Updater(id, actionUrl, AjaxOptions.defaultOptions(options));
-    },
+    }
 
 // request : function(actionUrl, options, elementID, queryParams) {
 // if (elementID) {
@@ -305,7 +305,7 @@ var AjaxSubmitButton = {
 };
 var ASB = AjaxSubmitButton;
 
-var AjaxBusy = {
+window.AjaxBusy = {
     spinners : {},
 
     requestContainer : function(ajaxOptions) {
