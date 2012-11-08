@@ -268,28 +268,10 @@ var Form = {
 
     serializeWithoutSubmits : function(form) {
         return jQuery(form).serialize();
-        // jQuery(form).filter()
-        //            
-        // var elements = Form.getElements($(form));
-        // var queryComponents = new Array();
-        //
-        // for ( var i = 0; i < elements.length; i++) {
-        // if (elements[i].type != 'submit') {
-        // if (elements[i].type == 'select-multiple' && !elements[i].value)
-        // continue;
-        // var queryComponent = Form.Element.serialize(elements[i]);
-        // if (queryComponent) {
-        // queryComponents.push(queryComponent);
-        // }
-        // }
-        // }
-        //
-        // return queryComponents.join('&');
     }
 }
 
-var Element = function() {
-}
+var Element = {}
 
 var Ajax = {
     prepareJQueryOption : function(prototypeOptions) {
@@ -365,6 +347,7 @@ Abstract.EventObserver = Class.extend({
     },
 
     registerFormCallbacks : function() {
+        notImplemented("registerFormCallbacks");
         Form.getElements(this.element).each(this.registerCallback, this);
     },
 

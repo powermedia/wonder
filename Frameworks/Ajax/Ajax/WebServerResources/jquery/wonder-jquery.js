@@ -307,7 +307,7 @@ var AjaxSubmitButton = {
 };
 var ASB = AjaxSubmitButton;
 
-window.AjaxBusy = {
+var AjaxBusy = {
     spinners : {},
 
     requestContainer : function(ajaxOptions) {
@@ -375,3 +375,36 @@ window.AjaxBusy = {
         });
     }
 };
+
+var AjaxInPlace = {
+    saveFunctionName : function(id) {
+        return "window." + id + "Save";
+    },
+
+    cancelFunctionName : function(id) {
+        return "window." + id + "Cancel";
+    },
+
+    editFunctionName : function(id) {
+        return "window." + id + "Edit";
+    },
+
+    cleanupEdit : function(id) {
+        var saveFunctionName = this.saveFunctionName(id);
+        var cancelFunctionName = this.cancelFunctionName(id);
+        if (typeof eval(saveFunctionName) != 'undefined') {
+            eval(saveFunctionName + " = null");
+        }
+        if (typeof eval(cancelFunctionName) != 'undefined') {
+            eval(cancelFunctionName + " = null");
+        }
+    },
+
+    cleanupView : function(id) {
+        var editFunctionName = this.editFunctionName(id);
+        if (typeof eval(editFunctionName) != 'undefined') {
+            eval(editFunctionName + " = null");
+        }
+    }
+};
+var AIP = AjaxInPlace;
