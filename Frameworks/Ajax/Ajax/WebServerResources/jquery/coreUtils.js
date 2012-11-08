@@ -65,6 +65,10 @@
 })();
 // **************************************************************************************//
 
+function notImplemented(msg) {
+    throw "Not implemented: " + msg;
+}
+
 var Abstract = {}
 
 jQueryId = function(id) {
