@@ -214,6 +214,14 @@ RegExp.escape = function(str) {
             return str.replace(new RegExp(ScriptFragment, 'img'), '');
         },
 
+        isEmpty : function(str) {
+            return (ObjectUtils.isUndefined(str) || str == null || StringUtils.strip(str) == "");
+        },
+
+        strip : function(str) {
+            return str.replace(/^\s+/, '').replace(/\s+$/, '');
+        },
+
         sub : sub,
         gsub : gsub
     }
