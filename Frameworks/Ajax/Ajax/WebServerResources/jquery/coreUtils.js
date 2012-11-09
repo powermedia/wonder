@@ -72,7 +72,11 @@ function notImplemented(msg) {
 var Abstract = {}
 
 jQueryId = function(id) {
-    return jQuery(withId(id));
+    if (ObjectUtils.isString(id)) {
+        return jQuery("#" + id);
+    } else {
+        return jQuery(id);
+    }
 }
 
 withId = function(id) {
