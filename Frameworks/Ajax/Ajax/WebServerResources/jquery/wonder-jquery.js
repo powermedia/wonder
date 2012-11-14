@@ -208,19 +208,24 @@ var AjaxSubmitButton = {
         processedOptions = AjaxSubmitButton.defaultOptions(processedOptions);
         return processedOptions;
     },
-    /*
-     * partial : function(updateContainerID, formFieldID, options) { var
-     * optionsCopy = Object.extend(new Object(), options); var formField =
-     * $(formFieldID); var form = formField.form;
-     * 
-     * var queryParams = {}; queryParams[formField.name] = $F(formField);
-     * queryParams[AjaxSubmitButton.PartialFormSenderIDKey] = formField.name;
-     * optionsCopy['parameters'] = Hash.toQueryString(queryParams);
-     * 
-     * if (updateContainerID == null) { AjaxSubmitButton.request(form, null,
-     * optionsCopy); } else { AjaxSubmitButton.update(updateContainerID, form,
-     * null, optionsCopy); } },
-     */
+
+    partial : function(updateContainerID, formFieldID, options) {
+        var $formField = jQueryId(formFieldID);
+        var form = $formField[0].form;
+
+        var queryParams = {};
+        queryParams[$formField.attr("name")] = $formField.val();
+        queryParams[AjaxSubmitButton.PartialFormSenderIDKey] = $formField.attr("name");
+        
+        var optionsCopy = jQuery.extend({}, options);
+        optionsCopy['parameters'] = jQuery.param(queryParams);
+
+        if (updateContainerID == null) {
+            AjaxSubmitButton.request(form, null, optionsCopy);
+        } else {
+            AjaxSubmitButton.update(updateContainerID, form, null, optionsCopy);
+        }
+    },
 
     update : function(id, form, queryParams, options) {
         var updateElement = withId(id);
@@ -232,20 +237,20 @@ var AjaxSubmitButton = {
         new Ajax.Updater(id, finalUrl, finalOptions);
     },
 
-    /*
-     * request : function(form, queryParams, options) { var finalUrl =
-     * AjaxSubmitButton.generateActionUrl(null, form, queryParams, options); var
-     * finalOptions = AjaxSubmitButton.processOptions(form, options); new
-     * Ajax.Request(finalUrl, finalOptions); },
-     * 
-     * observeDescendentFields : function(updateContainerID, containerID,
-     * observeFieldFrequency, partial, observeDelay, options) {
-     * $(containerID).descendants().find( function(element) { if (element.type !=
-     * 'hidden' && [ 'input', 'select', 'textarea'
-     * ].include(element.tagName.toLowerCase())) {
-     * AjaxSubmitButton.observeField(updateContainerID, element,
-     * observeFieldFrequency, partial, observeDelay, options); } }); },
-     */
+    request : function(form, queryParams, options) {
+        var finalUrl = AjaxSubmitButton.generateActionUrl(null, form, queryParams, options);
+        var finalOptions = AjaxSubmitButton.processOptions(form, options);
+        new Ajax.Request(finalUrl, finalOptions);
+    },
+
+    // observeDescendentFields : function(updateContainerID, containerID,
+    // observeFieldFrequency, partial, observeDelay, options) {
+    // $(containerID).descendants().find( function(element) { if (element.type
+    // !=
+    // 'hidden' && [ 'input', 'select', 'textarea'
+    // ].include(element.tagName.toLowerCase())) {
+    // AjaxSubmitButton.observeField(updateContainerID, element,
+    // observeFieldFrequency, partial, observeDelay, options); } }); },
 
     observeField : function(updateContainerID, formFieldID, observeFieldFrequency, partial, observeDelay, options) {
         var $formField = jQueryId(formFieldID);

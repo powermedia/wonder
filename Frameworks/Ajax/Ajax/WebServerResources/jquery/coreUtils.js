@@ -335,6 +335,20 @@ Ajax.Updater = Class.extend({
 
 });
 
+Ajax.Request = Class.extend({
+    init : function(url, options) {
+        var onComplete = options.onComplete || function() {
+        };
+
+        this.options = jQuery.extend(Ajax.prepareJQueryOption(options), {
+            url : url,
+            dataType : "html"
+        });
+
+        jQuery.ajax(this.options).done(onComplete);
+    }
+});
+
 // Observers
 Abstract.EventObserver = Class.extend({
     init : function(element, callback) {
