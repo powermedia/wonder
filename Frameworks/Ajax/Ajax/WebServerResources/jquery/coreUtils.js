@@ -87,13 +87,13 @@ defer = function(func) {
     return window.setTimeout(func, 0.01);
 }
 
-jQuery.fn.cumulativeZINdex = function() {
+jQuery.fn.cumulativeZIndex = function() {
     var $this = jQuery(this);
 
     zIndex = $this.elemZIndex();
 
     $this.parents().each(function() {
-        zIndex = zIndex + $this.elemZIndex();
+        zIndex = zIndex + jQuery(this).elemZIndex();
     });
 
     return zIndex;
