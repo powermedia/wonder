@@ -88,7 +88,7 @@ defer = function(func) {
 }
 
 jQuery.fn.cumulativeZINdex = function() {
-    var $this = $(this);
+    var $this = jQuery(this);
 
     zIndex = $this.elemZIndex();
 
