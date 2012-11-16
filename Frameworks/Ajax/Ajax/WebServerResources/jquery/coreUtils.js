@@ -87,34 +87,63 @@ defer = function(func) {
     return window.setTimeout(func, 0.01);
 }
 
-jQuery.fn.cumulativeZIndex = function() {
-    var $this = jQuery(this);
+jQuery.fn.extend({
+    checked : function(value) {
+        return value === undefined ? jQuery(this).attr("checked") == "checked" : jQuery(this).attr("checked", value);
+    },
 
-    zIndex = $this.elemZIndex();
+    disabled : function(value) {
+        return value === undefined ? jQuery(this).attr("disabled") == "disabled" : (value ? jQuery(this).attr(
+                "disabled", "disabled") : jQuery(this).removeAttr("disabled"));
+    },
 
-    $this.parents().each(function() {
-        zIndex = zIndex + jQuery(this).elemZIndex();
-    });
+    clickLink : function() {
+        this.each(function() {
+            var fireDefault = true;
 
-    return zIndex;
-}
+            if (document.createEvent) {
+                var event = document.createEvent("MouseEvents");
+                event.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                fireDefault = this.dispatchEvent(event);
+            } else if (this.fireEvent && document.createEventObject) {
+                fireDefault = this.fireEvent("onclick");
+            }
 
-jQuery.fn.elemZIndex = function() {
-    try {
-        var res = Number(this.css("zIndex"));
-        if (isNaN(res)) {
+            if (fireDefault) {
+                window.location = this.href;
+            }
+        });
+    },
+
+    cumulativeZIndex : function() {
+        var $this = jQuery(this);
+
+        zIndex = $this.elemZIndex();
+
+        $this.parents().each(function() {
+            zIndex = zIndex + jQuery(this).elemZIndex();
+        });
+
+        return zIndex;
+    },
+
+    elemZIndex : function() {
+        try {
+            var res = Number(this.css("zIndex"));
+            if (isNaN(res)) {
+                return 0;
+            } else {
+                return res;
+            }
+        } catch (e) {
             return 0;
-        } else {
-            return res;
         }
-    } catch (e) {
-        return 0;
-    }
-}
+    },
 
-jQuery.fn.isInDOM = function() {
-    return this.closest('html').length > 0;
-}
+    isInDOM : function() {
+        return this.closest('html').length > 0;
+    }
+});
 
 var ScriptFragment = '<script[^>]*>([\\S\\s]*?)<\/script>';
 
@@ -353,11 +382,11 @@ Ajax.Request = Class.extend({
 Abstract.EventObserver = Class.extend({
     init : function(element, callback) {
         this.element = element;
-        this.jqElement = jQuery(element);
+        this.$element = jQuery(element);
         this.callback = callback;
 
         this.lastValue = this.getValue();
-        if (this.element.tagName.toLowerCase() == 'form') {
+        if (this.$element.is('form')) {
             this.registerFormCallbacks();
         } else {
             this.registerCallback(this.element);
@@ -378,22 +407,19 @@ Abstract.EventObserver = Class.extend({
     },
 
     registerCallback : function(element) {
-        if (element.type) {
-            switch (element.type.toLowerCase()) {
-                case 'checkbox':
-                case 'radio':
-                    this.jqElement.click(jQuery.proxy(this.onElementEvent, this));
-                    break;
-                default:
-                    this.jqElement.change(jQuery.proxy(this.onElementEvent, this));
-                    break;
-            }
+        if (this.$element.is(":checkbox") || this.$element.is(":radio")) {
+            this.$element.click(jQuery.proxy(this.onElementEvent, this));
+        } else {
+            this.$element.change(jQuery.proxy(this.onElementEvent, this));
         }
     }
 });
 
 Form.Element.EventObserver = Abstract.EventObserver.extend({
     getValue : function() {
-        return this.jqElement.val();
+        if (this.$element.is(":checkbox")) {
+            return this.$element.checked();
+        }
+        return this.$element.val();
     }
 });

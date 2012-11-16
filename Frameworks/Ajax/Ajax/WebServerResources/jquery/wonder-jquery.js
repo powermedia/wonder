@@ -216,7 +216,7 @@ var AjaxSubmitButton = {
         var queryParams = {};
         queryParams[$formField.attr("name")] = $formField.val();
         queryParams[AjaxSubmitButton.PartialFormSenderIDKey] = $formField.attr("name");
-        
+
         var optionsCopy = jQuery.extend({}, options);
         optionsCopy['parameters'] = jQuery.param(queryParams);
 
