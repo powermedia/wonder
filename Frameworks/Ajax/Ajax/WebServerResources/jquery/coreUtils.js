@@ -65,11 +65,13 @@
 })();
 // **************************************************************************************//
 
-function notImplemented(msg) {
-    throw "Not implemented: " + msg;
+withId = function(id) {
+    return document.getElementById(id);
 }
 
-var Abstract = {}
+defer = function(func) {
+    return window.setTimeout(func, 0.01);
+}
 
 jQueryId = function(id) {
     if (ObjectUtils.isString(id)) {
@@ -79,13 +81,11 @@ jQueryId = function(id) {
     }
 }
 
-withId = function(id) {
-    return document.getElementById(id);
+function notImplemented(msg) {
+    throw "Not implemented: " + msg;
 }
 
-defer = function(func) {
-    return window.setTimeout(func, 0.01);
-}
+var Abstract = {}
 
 jQuery.fn.extend({
     checked : function(value) {
