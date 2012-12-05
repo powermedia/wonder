@@ -18,5 +18,5 @@ er.extensions.Ajax.hasLocalization=false
 
 
 er.extensions.ERXResponseRewriter.resource.Ajax.jquery/jquery.js=Ajax.jquery/jquery-1.8.2.js
-er.extensions.ERXResponseRewriter.resource.Ajax.jquery/jquery-ui.js=Ajax.jquery/ui/jquery-ui-1.9.1.custom.js
-er.extensions.ERXResponseRewriter.resource.Ajax.jquery/jquery-ui.css=Ajax.jquery/ui/jquery-ui-1.9.1.custom.css
+er.extensions.ERXResponseRewriter.resource.Ajax.jquery/jquery-ui.js=Ajax.jquery/ui/jquery-ui-1.9.2.custom.js
+er.extensions.ERXResponseRewriter.resource.Ajax.jquery/jquery-ui.css=Ajax.jquery/ui/jquery-ui-1.9.2.custom.css
