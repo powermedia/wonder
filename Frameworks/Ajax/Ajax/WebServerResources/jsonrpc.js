@@ -339,30 +339,30 @@ function toJSON(o)
 }
 
 /* JSONRpcClient constructor */
-function JSONRpcClient()
+function JSONRpcClient(options)
 {
-  var arg_shift = 0,
-      req,
+  var req,
       _function,
       methods,
       self;
+  
+  options = options || {};
 
   //If a call back is being used grab it
-  if (typeof arguments[0] == "function")
+  if (options.readyCB && typeof options.readyCB == "function")
   {
-    this.readyCB = arguments[0];
-    arg_shift++;
+    this.readyCB = options.readyCB;
   }
   //The next 3 args are passed to the http request
-  this.serverURL = arguments[arg_shift];
-  this.user = arguments[arg_shift + 1];
-  this.pass = arguments[arg_shift + 2];
+  this.serverURL = options.serverURL;
+  this.user = options.user;
+  this.pass = options.pass;
   //A unique identifier which the identity hashcode of the object on the server, if this is a reference type
-  this.objectID = arguments[arg_shift + 3];
+  this.objectID = options.objectID;
   //The full package+classname of the object
-  this.javaClass = arguments[arg_shift + 4];
+  this.javaClass = options.javaClass;
   //The reference type this is: Reference or CallableReference
-  this.JSONRPCType = arguments[arg_shift + 5];
+  this.JSONRPCType = options.JSONRPCType;
   //if we have already made one of these classes before
   if(JSONRpcClient.knownClasses[this.javaClass]&&(this.JSONRPCType=="CallableReference"))
   {
@@ -947,8 +947,7 @@ JSONRpcClient.prototype._handleResponse = function (http)
   {
     if(r.objectID && r.JSONRPCType == "CallableReference")
     {  
-      return new JSONRpcClient(this.serverURL, this.user, this.pass, r.objectID, 
-        r.javaClass, r.JSONRPCType);
+      return new JSONRpcClient({serverURL : this.serverURL, user : this.user, pass : this.pass, objectID : r.objectID, javaClass : r.javaClass, JSONRPCType : r.JSONRPCType});
     }
     r=JSONRpcClient.extractCallableReferences(this,r);
   }
@@ -1002,7 +1001,7 @@ JSONRpcClient.makeCallableReference = function(self,value)
 {
   if(value && value.objectID && value.javaClass && value.JSONRPCType == "CallableReference")
   {
-    return new JSONRpcClient(self.serverURL, self.user, self.pass, value.objectID,value.javaClass,value.JSONRPCType);
+    return new JSONRpcClient({serverURL : self.serverURL, user : self.user, pass : self.pass, objectID : value.objectID, javaClass : value.javaClass, JSONRPCType : value.JSONRPCType});
   }
   return null;
 };

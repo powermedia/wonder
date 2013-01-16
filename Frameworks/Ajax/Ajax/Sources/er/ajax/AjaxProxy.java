@@ -138,10 +138,10 @@ public class AjaxProxy extends AjaxComponent {
 			String jsonRpcJavascript;
 			if (booleanValueForBinding("lazy", false)) {
 			    String varName = "_" + name;
-			    jsonRpcJavascript = "function " + name + "(callback) { if (typeof " + varName + " == 'undefined') { " + varName + "=new JSONRpcClient(callback, '" + AjaxUtils.ajaxComponentActionUrl(context()) + "'); } else { callback(); } }";
+			    jsonRpcJavascript = "function " + name + "(callback) { if (typeof " + varName + " == 'undefined') { " + varName + "=new JSONRpcClient({readyCB : callback, serverURL: '" + AjaxUtils.ajaxComponentActionUrl(context()) + "'); } else { callback(); } }";
 			}
 			else {
-			    jsonRpcJavascript = name + "=new JSONRpcClient('" + AjaxUtils.ajaxComponentActionUrl(context()) + "');";
+			    jsonRpcJavascript = name + "=new JSONRpcClient({serverURL:'" + AjaxUtils.ajaxComponentActionUrl(context()) + "'});";
 			}
 			ERXResponseRewriter.addScriptCodeInHead(res, context(), jsonRpcJavascript, key);
 		}

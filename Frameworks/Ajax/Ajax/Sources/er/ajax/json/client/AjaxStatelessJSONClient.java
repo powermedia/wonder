@@ -1,16 +1,22 @@
 package er.ajax.json.client;
 
 import com.webobjects.appserver.WOApplication;
+import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WOResponse;
+import com.webobjects.foundation.NSDictionary;
+import com.webobjects.foundation.NSMutableArray;
+import com.webobjects.foundation.NSMutableDictionary;
 
+import er.ajax.AjaxOption;
+import er.ajax.AjaxOptions;
 import er.ajax.AjaxUtils;
 import er.ajax.json.JSONRequestHandler;
 import er.extensions.components.ERXComponent;
 
 /**
- * StatelessJSONClient renders a "new JSONRpcClient('...')" with a URL back to your application (along with a session ID if
- * there is one).
+ * StatelessJSONClient renders a "new JSONRpcClient('...')" with a URL back to
+ * your application (along with a session ID if there is one).
  * 
  * <code>
  * var jsonClient = <wo:StatelessJSONClient/>;
@@ -21,9 +27,10 @@ import er.extensions.components.ERXComponent;
  */
 public class AjaxStatelessJSONClient extends ERXComponent {
 	/**
-	 * Do I need to update serialVersionUID?
-	 * See section 5.6 <cite>Type Changes Affecting Serialization</cite> on page 51 of the 
-	 * <a href="http://java.sun.com/j2se/1.4/pdf/serial-spec.pdf">Java Object Serialization Spec</a>
+	 * Do I need to update serialVersionUID? See section 5.6 <cite>Type Changes
+	 * Affecting Serialization</cite> on page 51 of the <a
+	 * href="http://java.sun.com/j2se/1.4/pdf/serial-spec.pdf">Java Object
+	 * Serialization Spec</a>
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -52,6 +59,16 @@ public class AjaxStatelessJSONClient extends ERXComponent {
 		return null;
 	}
 
+	public NSDictionary createAjaxOptions(WOContext woContext, String componentName, String instance, String queryString) {
+		String jsonUrl = JSONRequestHandler.jsonUrl(woContext, componentName, instance, queryString);
+
+		NSMutableArray<AjaxOption> ajaxOptionsArray = new NSMutableArray<AjaxOption>();
+		ajaxOptionsArray.addObject(new AjaxOption("readyCB", "callback", null, AjaxOption.SCRIPT));
+		ajaxOptionsArray.addObject(new AjaxOption("serverURL", jsonUrl, AjaxOption.STRING));
+		
+		return AjaxOption.createAjaxOptionsDictionary(ajaxOptionsArray, this,  _keyAssociations);
+	}
+
 	@Override
 	public void appendToResponse(WOResponse woresponse, WOContext wocontext) {
 		AjaxUtils.addScriptResourceInHead(wocontext, woresponse, "jsonrpc.js");
@@ -71,15 +88,8 @@ public class AjaxStatelessJSONClient extends ERXComponent {
 			instance = jsonInstance();
 		}
 
-		String jsonUrl = JSONRequestHandler.jsonUrl(wocontext, componentName, instance, queryString);
 		woresponse.appendContentString("new JSONRpcClient(");
-		String callback = stringValueForBinding("callback");
-		if (callback != null) {
-			woresponse.appendContentString(callback);
-			woresponse.appendContentString(",");
-		}
-		woresponse.appendContentString("'");
-		woresponse.appendContentString(jsonUrl);
-		woresponse.appendContentString("')");
+		AjaxOptions.appendToResponse(createAjaxOptions(wocontext, componentName, instance, queryString), woresponse, wocontext);
+		woresponse.appendContentString(");");
 	}
 }
