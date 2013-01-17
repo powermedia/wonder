@@ -408,9 +408,17 @@ function JSONRpcClient(options)
       };
     }
 
-    // Send the request
-    methods = this._sendRequest(req);
-
+    if (options.methods && options.methods.length > 0) {
+    	methods = options.methods;
+    	
+    	if (this.readyCB) {
+    		this.readyCB(methods);
+    	}
+    } else {
+	    // Send the request
+	    methods = this._sendRequest(req);
+    }
+    
     //Now add the methods to the object
     //Note: we don't do this if an async constructor callback has been used
     //as this is done in the request's wrapper callback

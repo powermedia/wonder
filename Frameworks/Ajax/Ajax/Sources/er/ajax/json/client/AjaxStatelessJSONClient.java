@@ -1,8 +1,13 @@
 package er.ajax.json.client;
 
+import org.jabsorb.JSONRPCBridge;
+import org.jabsorb.JSONRPCResult;
+import org.json.JSONObject;
+
 import com.webobjects.appserver.WOApplication;
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
+import com.webobjects.appserver.WORequestHandler;
 import com.webobjects.appserver.WOResponse;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableArray;
@@ -12,6 +17,7 @@ import er.ajax.AjaxOption;
 import er.ajax.AjaxOptions;
 import er.ajax.AjaxUtils;
 import er.ajax.json.JSONRequestHandler;
+import er.extensions.appserver.ERXApplication;
 import er.extensions.components.ERXComponent;
 
 /**
@@ -60,11 +66,18 @@ public class AjaxStatelessJSONClient extends ERXComponent {
 	}
 
 	public NSDictionary createAjaxOptions(WOContext woContext, String componentName, String instance, String queryString) {
+		String methods = null;
+		WORequestHandler requestHandler = ERXApplication.erxApplication().requestHandlerForKey(JSONRequestHandler.RequestHandlerKey);
+		if (requestHandler != null && requestHandler instanceof JSONRequestHandler) {
+			methods = JSONRPCBridge.getMethods(((JSONRequestHandler) requestHandler).getJSONBridge());
+		}
+		
 		String jsonUrl = JSONRequestHandler.jsonUrl(woContext, componentName, instance, queryString);
 
 		NSMutableArray<AjaxOption> ajaxOptionsArray = new NSMutableArray<AjaxOption>();
 		ajaxOptionsArray.addObject(new AjaxOption("readyCB", "callback", null, AjaxOption.SCRIPT));
 		ajaxOptionsArray.addObject(new AjaxOption("serverURL", jsonUrl, AjaxOption.STRING));
+		ajaxOptionsArray.addObject(new AjaxOption("methods", methods, AjaxOption.SCRIPT));
 		
 		return AjaxOption.createAjaxOptionsDictionary(ajaxOptionsArray, this,  _keyAssociations);
 	}
