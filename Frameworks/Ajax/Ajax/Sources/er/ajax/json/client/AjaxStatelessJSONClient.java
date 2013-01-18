@@ -1,21 +1,17 @@
 package er.ajax.json.client;
 
-import org.jabsorb.JSONRPCBridge;
-import org.jabsorb.JSONRPCResult;
-import org.json.JSONObject;
 
 import com.webobjects.appserver.WOApplication;
-import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WORequestHandler;
 import com.webobjects.appserver.WOResponse;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableArray;
-import com.webobjects.foundation.NSMutableDictionary;
 
 import er.ajax.AjaxOption;
 import er.ajax.AjaxOptions;
 import er.ajax.AjaxUtils;
+import er.ajax.json.JSONBridge;
 import er.ajax.json.JSONRequestHandler;
 import er.extensions.appserver.ERXApplication;
 import er.extensions.components.ERXComponent;
@@ -69,7 +65,7 @@ public class AjaxStatelessJSONClient extends ERXComponent {
 		String methods = null;
 		WORequestHandler requestHandler = ERXApplication.erxApplication().requestHandlerForKey(JSONRequestHandler.RequestHandlerKey);
 		if (requestHandler != null && requestHandler instanceof JSONRequestHandler) {
-			methods = JSONRPCBridge.getMethods(((JSONRequestHandler) requestHandler).getJSONBridge());
+			methods = JSONBridge.getMethods(((JSONRequestHandler) requestHandler).getJSONBridge());
 		}
 		
 		String jsonUrl = JSONRequestHandler.jsonUrl(woContext, componentName, instance, queryString);

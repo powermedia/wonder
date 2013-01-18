@@ -1662,16 +1662,4 @@ public class JSONRPCBridge implements Serializable
     return javaArgs;
   }
   
-  public static String getMethods(JSONRPCBridge bridge) {
-		try {
-			JSONRPCResult jsonRes = bridge.call(null, new JSONObject("{id=1, method=system.listMethods, params=[]}"));
-			if (jsonRes.getResult() != null && jsonRes.getResult() instanceof JSONArray) {
-				return jsonRes.getResult().toString();
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-  }
 }

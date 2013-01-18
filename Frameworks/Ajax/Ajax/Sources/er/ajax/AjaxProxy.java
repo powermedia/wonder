@@ -1,12 +1,11 @@
 package er.ajax;
 
+
 import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 import org.jabsorb.JSONRPCBridge;
 import org.jabsorb.JSONRPCResult;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.webobjects.appserver.WOActionResults;
@@ -158,7 +157,7 @@ public class AjaxProxy extends AjaxComponent {
 			else {
 				jsonRpcJavascript = name + "=new JSONRpcClient({serverURL:'" + AjaxUtils.ajaxComponentActionUrl(context()) + "'";
 
-				String methods = JSONRPCBridge.getMethods(getBridge());
+				String methods = JSONBridge.getMethods(getBridge());
 				if (methods != null) {
 					jsonRpcJavascript += ",methods : " + methods.toString();
 				}

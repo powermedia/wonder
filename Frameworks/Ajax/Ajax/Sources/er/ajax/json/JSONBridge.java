@@ -1,6 +1,9 @@
 package er.ajax.json;
 
 import org.jabsorb.JSONRPCBridge;
+import org.jabsorb.JSONRPCResult;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WORequest;
@@ -71,4 +74,18 @@ public class JSONBridge extends JSONRPCBridge {
 		JSONBridge.getSerializer().setFixupDuplicates(value);
 		return result;
 	}
+	
+	  public static String getMethods(JSONRPCBridge bridge) {
+			try {
+				JSONRPCResult jsonRes = bridge.call(null, new JSONObject("{id=1, method=system.listMethods, params=[]}"));
+				if (jsonRes.getResult() != null && jsonRes.getResult() instanceof JSONArray) {
+					return jsonRes.getResult().toString();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+	  }
+
 }
