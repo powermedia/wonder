@@ -297,7 +297,6 @@ var AjaxSubmitButton = {
             defer(function() {
                 if (observeFieldFrequency == null) {
                     if (withId(formFieldID).type.toLowerCase() == 'radio') {
-                        notImplemented("Element.RadioButtonObserver");
                         new Form.Element.RadioButtonObserver(withId(formFieldID), submitFunction);
                     } else {
                         new Form.Element.EventObserver(withId(formFieldID), submitFunction);
