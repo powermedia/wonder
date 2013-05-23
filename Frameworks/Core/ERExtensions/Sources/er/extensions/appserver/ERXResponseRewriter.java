@@ -354,9 +354,7 @@ public class ERXResponseRewriter {
 			int insertIndex = tagIndex;
 			if (content.toLowerCase().startsWith("<link") || content.toLowerCase().startsWith("<style")) {
 				int scriptIndex = responseContent.toLowerCase().indexOf("<script");
-				int comBegin = responseContent.substring(0, scriptIndex).lastIndexOf("<!--");
-				int comEnd = responseContent.substring(0, scriptIndex).toLowerCase().lastIndexOf("-->");
-				if (scriptIndex > 0 && scriptIndex < insertIndex && (comBegin > -1 && comEnd > comBegin || comBegin == -1 && comEnd == -1) ) {
+				if (scriptIndex > 0 && scriptIndex < insertIndex) {
 					insertIndex = scriptIndex;
 				}
 			}
