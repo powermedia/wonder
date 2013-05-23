@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>wonder</groupId>
 	<artifactId>wonder</artifactId>
-	<version>5.7.pm-jquery.5-SNAPSHOT</version>
+	<version>5.7.pm-jquery.6-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Project Wonder</name>
 	<url>http://wiki.objectstyle.org/confluence/display/WONDER/Home</url>
@@ -768,13 +768,13 @@
     <repository>
       <id>power-releases.deploy</id>
       <name>Power</name>
-      <url>http://testpowolny1:8080/nexus/content/repositories/pm-releases/</url>
+      <url>http://maven.power.com.pl:8080/nexus/content/repositories/pm-releases/</url>
     </repository>
     <snapshotRepository>
       <id>power-snapshots.deploy</id>
       <name>Power</name>
       <uniqueVersion>false</uniqueVersion>
-      <url>http://testpowolny1:8080/nexus/content/repositories/pm-snapshots/</url>
+      <url>http://maven.power.com.pl:8080/nexus/content/repositories/pm-snapshots/</url>
     </snapshotRepository>        
   </distributionManagement>
 
