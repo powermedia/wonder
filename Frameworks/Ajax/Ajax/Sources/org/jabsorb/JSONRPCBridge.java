@@ -227,6 +227,12 @@ public class JSONRPCBridge implements Serializable
       return t;
     }
   };
+  
+  private static ExceptionTransformer DEFAULT_TRANSFORMER = IDENTITY_EXCEPTION_TRANSFORMER;
+  
+  public static void setDefaultTransformer(ExceptionTransformer transformer) {
+	DEFAULT_TRANSFORMER = transformer;
+  }
 
   /**
    * The logger for this class
@@ -420,7 +426,7 @@ public class JSONRPCBridge implements Serializable
   /**
    * The functor used to convert exceptions
    */
-  private ExceptionTransformer exceptionTransformer = IDENTITY_EXCEPTION_TRANSFORMER;
+  private ExceptionTransformer exceptionTransformer = DEFAULT_TRANSFORMER;
 
   /**
    * Bridge state
