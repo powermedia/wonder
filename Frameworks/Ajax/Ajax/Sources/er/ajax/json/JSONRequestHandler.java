@@ -314,16 +314,13 @@ public class JSONRequestHandler extends WORequestHandler {
 				}
 			}
 			catch (NoSuchElementException e) {
-				e.printStackTrace();
-				output = new JSONRPCResult(JSONRPCResult.CODE_ERR_NOMETHOD, null, JSONRPCResult.MSG_ERR_NOMETHOD);
+				output = handleNoMethodError(e);
 			}
 			catch (JSONException e) {
-				e.printStackTrace();
-				output = new JSONRPCResult(JSONRPCResult.CODE_ERR_PARSE, null, JSONRPCResult.MSG_ERR_PARSE);
+				output = handleJSONException(e);
 			}
 			catch (Throwable t) {
-				t.printStackTrace();
-				output = new JSONRPCResult(JSONRPCResult.CODE_ERR_PARSE, null, t.getMessage());
+				output = handleException(t);
 			}
 
 			return response;
@@ -332,7 +329,24 @@ public class JSONRequestHandler extends WORequestHandler {
 			application.sleep();
 		}
 	}
+	
+	protected JSONRPCResult handleNoMethodError(NoSuchElementException e) {
+		return handleException(e, JSONRPCResult.CODE_ERR_NOMETHOD, JSONRPCResult.MSG_ERR_NOMETHOD);		
+	}
 
+	protected JSONRPCResult handleJSONException(JSONException e) {
+		return handleException(e, JSONRPCResult.CODE_ERR_PARSE, JSONRPCResult.MSG_ERR_PARSE);		
+	}
+
+	protected JSONRPCResult handleException(Throwable t) {
+		return handleException(t, JSONRPCResult.CODE_ERR_PARSE, t.getMessage());		
+	}
+
+	protected JSONRPCResult handleException(Throwable t, int errorCode, String msg) {
+		t.printStackTrace();
+		return new JSONRPCResult(errorCode, null, msg);		
+	}
+	
 	protected static String componentNameAndInstance(String componentName, String componentInstance) {
 		String componentNameAndInstance;
 		if (componentInstance == null) {
