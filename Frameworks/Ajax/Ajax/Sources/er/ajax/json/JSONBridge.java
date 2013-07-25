@@ -1,5 +1,6 @@
 package er.ajax.json;
 
+import org.jabsorb.ExceptionTransformer;
 import org.jabsorb.JSONRPCBridge;
 import org.jabsorb.JSONRPCResult;
 import org.json.JSONArray;
@@ -24,21 +25,24 @@ import er.ajax.json.serializer.NSTimestampSerializer;
 /**
  * Subclass of JSONRPCBridge.
  * 
- *
+ * 
  * @author ak
  */
 public class JSONBridge extends JSONRPCBridge {
 	/**
-	 * Do I need to update serialVersionUID?
-	 * See section 5.6 <cite>Type Changes Affecting Serialization</cite> on page 51 of the 
-	 * <a href="http://java.sun.com/j2se/1.4/pdf/serial-spec.pdf">Java Object Serialization Spec</a>
+	 * Do I need to update serialVersionUID? See section 5.6 <cite>Type Changes
+	 * Affecting Serialization</cite> on page 51 of the <a
+	 * href="http://java.sun.com/j2se/1.4/pdf/serial-spec.pdf">Java Object
+	 * Serialization Spec</a>
 	 */
 	private static final long serialVersionUID = 1L;
 
 	private static boolean isInitialized;
-	
+
+	private static ExceptionTransformer defaultExceptionTransformer;
+
 	public static void _initializeBridge() {
-		if(isInitialized) {
+		if (isInitialized) {
 			return;
 		}
 		try {
@@ -59,11 +63,11 @@ public class JSONBridge extends JSONRPCBridge {
 			throw new RuntimeException("Failed to initialize JSON.");
 		}
 	}
-	
+
 	/**
 	 * Factory to create a json bridge.
 	 * 
-	 * @return 
+	 * @return
 	 */
 	public static JSONBridge createBridge() {
 		_initializeBridge();
@@ -72,20 +76,26 @@ public class JSONBridge extends JSONRPCBridge {
 		boolean value = true;
 		JSONBridge.getSerializer().setFixupCircRefs(value);
 		JSONBridge.getSerializer().setFixupDuplicates(value);
+		if (defaultExceptionTransformer != null) {
+			result.setExceptionTransformer(defaultExceptionTransformer);
+		}
 		return result;
 	}
-	
-	  public static String getMethods(JSONRPCBridge bridge) {
-			try {
-				JSONRPCResult jsonRes = bridge.call(null, new JSONObject("{id=1, method=system.listMethods, params=[]}"));
-				if (jsonRes.getResult() != null && jsonRes.getResult() instanceof JSONArray) {
-					return jsonRes.getResult().toString();
-				}
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-	  }
 
+	public static String getMethods(JSONRPCBridge bridge) {
+		try {
+			JSONRPCResult jsonRes = bridge.call(null, new JSONObject("{id=1, method=system.listMethods, params=[]}"));
+			if (jsonRes.getResult() != null && jsonRes.getResult() instanceof JSONArray) {
+				return jsonRes.getResult().toString();
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void setDefaultExceptionTransformer(final ExceptionTransformer transformer) {
+		JSONBridge.defaultExceptionTransformer = transformer;
+	}
 }
