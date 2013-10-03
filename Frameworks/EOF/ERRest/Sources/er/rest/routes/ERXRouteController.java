@@ -1775,11 +1775,15 @@ public class ERXRouteController extends WODirectAction {
 	public <T extends ERXRouteController> T controller(Class<T> controllerClass) {
 		try {
 			T controller = requestHandler().controller(controllerClass, request(), context());
-			controller._route = _route;
-			controller._editingContext = _editingContext;
-			controller._routeKeys = _routeKeys;
-			controller._objects = _objects;
-			controller._options = _options;
+			
+			ERXRouteController controllerCasted = controller;
+			
+			controllerCasted._route = _route;
+			controllerCasted._editingContext = _editingContext;
+			controllerCasted._routeKeys = _routeKeys;
+			controllerCasted._objects = _objects;
+			controllerCasted._options = _options;
+			
 			return controller;
 		}
 		catch (Exception e) {
